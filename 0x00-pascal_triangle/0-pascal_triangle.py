@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Pascal Triangle Interview Challenge"""
+
 
 def pascal_triangle(n):
     """returns a list of lists of numbers
@@ -17,3 +19,13 @@ def pascal_triangle(n):
         triangle.append(row)
 
     return triangle
+
+
+"""This implementation uses a nested loop to
+build up the Pascal's triangle row by row.
+The outer loop runs from 1 to n-1
+(inclusive) to generate each row, and the inner loop
+generates each element of the row based on the
+values in the previous row. The triangle
+is represented as a list of lists of integers,
+with each inner list representing a row of the triangle."""
