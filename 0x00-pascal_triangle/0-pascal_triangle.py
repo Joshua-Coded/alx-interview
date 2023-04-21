@@ -4,16 +4,16 @@ def pascal_triangle(n):
     """returns a list of lists of numbers
     representing the pascal triangle"""
     if n <= 0:
-        return list()
+        return []
 
-    empty_list = list([1])
+    triangle = [[1]]
 
     for i in range(1, n):
-        row = list([1])
+        row = [1]
 
         for j in range(1, i):
-            row.append(empty_list[i-1][j-1] + empty_list[i-1][j])
+            row.append(triangle[i-1][j-1] + triangle[i-1][j])
         row.append(1)
-        empty_list.append(row)
+        triangle.append(row)
 
-    return empty_list
+    return triangle
