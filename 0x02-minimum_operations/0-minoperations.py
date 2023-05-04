@@ -11,20 +11,16 @@ def minOperations(n):
     if the only available operations are "Copy All" and "Paste"
     """
     
-    if n < 1:
-        return 0
-
-    op = 0
-    fact = 2
-    prod = n
-    
-    while fact <= prod:
-        while prod % fact == 0:
-            op += fact
-            prod /= fact
-        fact += 1
-
-    if op == 0:
-        return n
-
-    return op
+    current = 1
+    starter = 0
+    count = 0
+    while now < n:
+        remainder = n - current
+        if (remainder % current == 0):
+            starter = current
+            current += starter
+            count += 2
+        else:
+            current += starter
+            count += 1
+    return count
