@@ -6,11 +6,7 @@ for question specifics.
 
 
 def minOperations(n):
-    """
-    Calculates the minimum number of operations to go from one 'H' to n 'H's
-    if the only available operations are "Copy All" and "Paste"
-    """
-    
+
     current = 1
     starter = 0
     count = 0
@@ -24,3 +20,8 @@ def minOperations(n):
             current += starter
             count += 1
     return count
+    """
+    Calculates the minimum number of operations to go from one 'H' to n 'H's
+    if the only available operations are "Copy All" and "Paste"
+    """
+    
