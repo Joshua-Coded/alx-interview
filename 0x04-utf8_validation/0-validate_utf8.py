@@ -1,44 +1,35 @@
-class Solution:
-    def validUTF8(self, data):
-        """
-        :type data: List[int]
-        :rtype: bool
-        """
+#!/usr/bin/python3
+"""Answer to UTF-8 Validation interview question. See specifics in README.md"""
 
-        # Number of bytes in the current UTF-8 character
-        n_bytes = 0
 
-        # For each integer in the data array.
-        for num in data:
+def validUTF8(data):
+    """ Checks if data is valid UTF8 data """
 
-            # Get the binary representation. We only need the least significant 8 bits
-            # for any given number.
-            bin_rep = format(num, '#010b')[-8:]
+    i = 0
+    while i < len(data):
 
-            # If this is the case then we are to start processing a new UTF-8 character.
-            if n_bytes == 0:
+        # If data[i]'s 8th byte is on, evaluate multi-byte character
+        if (data[i] >> 7) & 1:
 
-                # Get the number of 1s in the beginning of the string.
-                for bit in bin_rep:
-                    if bit == '0': break
-                    n_bytes += 1
-
-                # 1 byte characters
-                if n_bytes == 0:
-                    continue
-
-                # Invalid scenarios according to the rules of the problem.
-                if n_bytes == 1 or n_bytes > 4:
-                    return False
+            # Find character byte size
+            if (data[i] >> 3) & 0b11111 == 0b11110:
+                char_size = 4
+            elif (data[i] >> 4) & 0b1111 == 0b1110:
+                char_size = 3
+            elif (data[i] >> 5) & 0b111 == 0b110:
+                char_size = 2
             else:
-                # Else, we are processing integers which represent bytes which are a part of
-                # a UTF-8 character. So, they must adhere to the pattern `10xxxxxx`.
-                if not (bin_rep[0] == '1' and bin_rep[1] == '0'):
+                return False
+
+            # If not enough bytes to complete character, return False
+            if char_size > len(data) - i:
+                return False
+
+            # Check character's other bytes.
+            for j in range(i + 1, i + char_size):
+                # If 7th byte is 1 or 8th byte is 0, return False
+                if (data[j] >> 6) & 1 or (data[j] >> 7) & 1 == 0:
                     return False
-
-            # We reduce the number of bytes to process by 1 after each integer.
-            n_bytes -= 1
-
-        # This is for the case where we might not have the complete data for
-        # a particular UTF-8 character.
-        return n_bytes == 0     
+            i = j
+        i += 1
+    return True
